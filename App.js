@@ -1,21 +1,34 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useState } from "react";
+import { Text, StyleSheet } from "react-native";
 
-const ViewBoxesWithColorAndText = () => {
+const onPressTitle = () => {
+  console.log("title pressed");
+};
+
+const TextInANest = () => {
+  const titleText = useState("NIVAR cyclone");
+  const bodyText = useState("It is very likely to cross between Karaikal and Mamallapuram ");
+
   return (
-    <View
-      // eslint-disable-next-line react-native/no-inline-styles
-      style={{
-        flexDirection: "row",
-        height: 100,
-        padding: 20
-      }}
-    >
-      <View style={{ backgroundColor: "blue", flex: 1 }} />
-      <View style={{ backgroundColor: "red", flex: 0.8 }} />
-      <Text>Good !</Text>
-    </View>
+    <Text style={styles.baseText}>
+      <Text style={styles.titleText} onPress={onPressTitle}>
+        {titleText}
+        {"\n"}
+        {"\n"}
+      </Text>
+      <Text numberOfLines={5}>{bodyText}</Text>
+    </Text>
   );
 };
 
-export default ViewBoxesWithColorAndText;
+const styles = StyleSheet.create({
+  baseText: {
+    fontFamily: "Times"
+  },
+  titleText: {
+    fontSize: 40,
+    fontWeight: "bold"
+  }
+});
+
+export default TextInANest;
