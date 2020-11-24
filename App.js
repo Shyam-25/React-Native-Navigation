@@ -1,34 +1,37 @@
-import React, { useState } from "react";
-import { Text, StyleSheet } from "react-native";
+import React from 'react';
+import { StyleSheet, Text, SafeAreaView, ScrollView } from 'react-native';
+import Constants from 'expo-constants';
 
-const onPressTitle = () => {
-  console.log("title pressed");
-};
-
-const TextInANest = () => {
-  const titleText = useState("NIVAR cyclone");
-  const bodyText = useState("It is very likely to cross between Karaikal and Mamallapuram ");
-
+const App = () => {
   return (
-    <Text style={styles.baseText}>
-      <Text style={styles.titleText} onPress={onPressTitle}>
-        {titleText}
-        {"\n"}
-        {"\n"}
-      </Text>
-      <Text numberOfLines={5}>{bodyText}</Text>
-    </Text>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <Text style={styles.text}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </Text>
+      </ScrollView>
+    </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  baseText: {
-    fontFamily: "Times"
+  container: {
+    flex: 1,
+    marginTop: Constants.statusBarHeight,
   },
-  titleText: {
-    fontSize: 40,
-    fontWeight: "bold"
-  }
+  scrollView: {
+    backgroundColor: 'pink',
+    marginHorizontal: 20,
+  },
+  text: {
+    fontSize: 42,
+  },
 });
 
-export default TextInANest;
+export default App;
