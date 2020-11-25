@@ -19,7 +19,7 @@ export default class LoginView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.inputContainer}>
+          <Image style={styles.inputIcon} source={{uri: 'https://reactnative.dev/img/tiny_logo.png',}}/>
           <Image style={styles.inputIcon} />
           <TextInput style={styles.inputs}
               placeholder="Email"
