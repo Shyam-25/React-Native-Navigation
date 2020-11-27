@@ -1,23 +1,40 @@
-import React from 'react';
-import { Text, View, Stylesheet, Switch} from 'react-native';
+import React, { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export default function App(){
-  return(
-    <View style={Stylesheet.container}>
-      <Text style={Stylesheet.Text}>Switch</Text>
-      <Switch value={true}/>
+const App = () => {
+  const [count, setCount] = useState(0);
+  const onPress = () => setCount(prevCount => prevCount + 1);
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.countContainer}>
+        <Text>Count: {count}</Text>
+      </View>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={onPress}
+      >
+        <Text>Click here</Text>
+      </TouchableOpacity>
     </View>
   );
-}
-const styles = Stylesheet.create({
-  container:{
-  flex: 1,
-  backgroundColor: '#000000',
-  alignItems:'center',
-  justfyContent:'center',
-},
-Text:{
-  fontSize: 10,
-  color:"#161616"
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 10
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "#FFFF00",
+    padding: 10
+  },
+  countContainer: {
+    alignItems: "center",
+    padding: 50
+  }
 });
+
+export default App;
