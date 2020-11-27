@@ -1,43 +1,47 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import React from 'react';
+import { View, KeyboardAvoidingView, TextInput, StyleSheet, Text, Platform, TouchableWithoutFeedback, Button, Keyboard  } from 'react-native';
 
 const Example = () => {
-  const [count, setCount] = useState(0);
-  const onPress = () => setCount(count + 1);
-
   return (
-    <View style={styles.container}>
-      <TouchableHighlight onPress={onPress}>
-        <View style={styles.button}>
-          <Text>Touch Here</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.android == "android" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.inner}>
+          <Text style={styles.header}>Welcome</Text>
+          <TextInput placeholder="Username" style={styles.textInput} />
+          <View style={styles.btnContainer}>
+            <Button title="Submit" onPress={() => null} />
+          </View>
         </View>
-      </TouchableHighlight>
-      <View style={styles.countContainer}>
-        <Text style={styles.countText}>
-          {count ? count : null}
-        </Text>
-      </View>
-    </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  inner: {
+    padding: 24,
     flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 10
+    justifyContent: "space-around"
   },
-  button: {
-    alignItems: "center",
-    backgroundColor: "#FFFF00",
-    padding: 15
+  header: {
+    fontSize: 36,
+    marginBottom: 48
   },
-  countContainer: {
-    alignItems: "center",
-    padding: 10
+  textInput: {
+    height: 50,
+    borderColor: "#000000",
+    borderBottomWidth: 1,
+    marginBottom: 36
   },
-  countText: {
-    color: "#FF00FF"
+  btnContainer: {
+    backgroundColor: "white",
+    marginTop: 12
   }
 });
 
