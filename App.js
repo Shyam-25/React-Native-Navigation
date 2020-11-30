@@ -1,40 +1,47 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React from 'react';
+import { Stylesheet, Text, View, Flatlist } from 'react-native';
 
-const App = () => {
-  const [count, setCount] = useState(0);
-  const onPress = () => setCount(prevCount => prevCount + 1);
+export default function App() {
+  const [people, setPeople] = useState([
+        { name: 'Ashwin', id:'1' },
+        { name: 'Shyam', id:'2'},
+        { name: 'Sundar', id:'3'},
+        { name: 'Ramesh', id:'4'},
+        { name: 'jai', id:'5'},
+        { name: 'kumar', id:'6'},
+  ]);
 
-  return (
+  return(
     <View style={styles.container}>
-      <View style={styles.countContainer}>
-        <Text>Count: {count}</Text>
-      </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={onPress}
-      >
-        <Text>Click here</Text>
-      </TouchableOpacity>
+    
+    <Flatlist
+       numColumns={2}
+       keyExtractor={(item) => item.id}
+       data={people}
+       renderItem={({ item })=>(
+         <Text style={styles.item}>{item.name}</Text>
+       )}
+    />
+
     </View>
+
+
   );
-};
-
-const styles = StyleSheet.create({
+}
+                         
+const styles = Stylesheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 10
+       flex:1,
+       backgroundColor: '#fff',
+       paddingTop: 40,
+       paddingHorizontal: 20
   },
-  button: {
-    alignItems: "center",
-    backgroundColor: "#FFFF00",
-    padding: 10
-  },
-  countContainer: {
-    alignItems: "center",
-    padding: 50
+  item:{
+    marginTop: 24,
+    padding: 30,
+    backgroundcolor: 'pink',
+    fontSize: 25,
+    marginHorizontal: 10;
+    marginTop: 24;
   }
-});
-
-export default App;
+})
