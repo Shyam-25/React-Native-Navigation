@@ -1,112 +1,65 @@
-import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  TouchableHighlight,
-  KeyboardAvoidingView,
-  Image,
-  Alert
-} from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View, SafeAreaView, SectionList } from "react-native";
 
-export default class LoginView extends Component {
 
-  constructor(props) {
-    super(props);
-    state = {
-      email   : '',
-      password: '',
-    }
+
+const DATA = [
+  {
+    title: "Food",
+    data: ["Meals", "Dosa", "Idly"]
+  },
+  {
+    title: "Ice Cream",
+    data: ["Chocolate", "Grape-Nut", "Blue-Moon"]
+  },
+  {
+    title: "Vegetable",
+    data: ["Tomato", "Carrot", "Beans"]
+  },
+  {
+    title: "Drinks",
+    data: ["Water", "Coke", "Fanta"]
   }
+];
 
-  onClickListener = (viewId) => {
-    Alert.alert("Alert", "Button pressed "+viewId);
-  }
+const Item = ({ title }) => (
+  <View style={styles.item}>
+    <Text style={styles.title}>{title}</Text>
+  </View>
+);
 
-  render() {
-    return (
-      
-      <View style={styles.container}>
-      <Image style={styles.inputIcon} source={{uri: 'https://reactnative.dev/img/tiny_logo.png',}}/>
-              <Text style={{fontSize:40,color:'grey', paddingTop:10}}>SIGN IN</Text>
-
-        <View style={styles.inputContainer}>
-          <Image style={styles.inputIcon}/> 
-          <TextInput style={styles.inputs}
-              placeholder="Email"
-              keyboardType="email-address"
-              underlineColorAndroid='transparent'
-              onChangeText={(email) => this.setState({email})}/>
-        </View>
-        
-        <View style={styles.inputContainer}>
-          <Image style={styles.inputIcon}/> 
-          <TextInput style={styles.inputs}
-              placeholder="Password"
-              secureTextEntry={true}
-              underlineColorAndroid='transparent'
-              onChangeText={(password) => this.setState({password})}/>
-        </View>
-
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')}>
-          <Text style={styles.loginText}>Login</Text>
-        </TouchableHighlight>
-
-
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('register')}>
-            <Text>New user..?Click here to Register</Text>
-        </TouchableHighlight>
-      </View>
-     
-    );
-  }
-}
+const App = () => (
+  <SafeAreaView style={styles.container}>
+    <SectionList
+      sections={DATA}
+      keyExtractor={(item, index) => item + index}
+      renderItem={({ item }) => <Item title={item} />}
+      renderSectionHeader={({ section: { title } }) => (
+        <Text style={styles.header}>{title}</Text>
+      )}
+    />
+  </SafeAreaView>
+);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#DCDCDC',
+    marginTop: 20,
+    marginHorizontal: 16
   },
-  inputContainer: {
-      borderBottomColor: '#F5FCFF',
-      backgroundColor: '#FFFFFF',
-      borderRadius:30,
-      borderBottomWidth: 1,
-      width:250,
-      height:45,
-      marginBottom:20,
-      flexDirection: 'row',
-      alignItems:'center'
+  item: {
+    backgroundColor: "#f9c2ff",
+    padding: 20,
+    marginVertical: 8
   },
-  inputs:{
-      height:45,
-      marginLeft:16,
-      borderBottomColor: '#FFFFFF',
-      flex:1,
+  header: {
+    fontSize: 32,
+    backgroundColor: "#000",
+    backgroundColor: "#a52a2a"
   },
-  inputIcon:{
-    width:50,
-    height:50,
-    marginLeft:15,
-    justifyContent: 'center'
-  },
-  buttonContainer: {
-    height:45,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom:20,
-    width:250,
-    borderRadius:30,
-  },
-  loginButton: {
-    backgroundColor: "#00b5ec",
-  },
-  loginText: {
-    color: 'white',
+  title: {
+    fontSize: 22
   }
 });
+
+export default App;
