@@ -6,6 +6,7 @@ import {
   TextInput,
   Button,
   TouchableHighlight,
+  KeyboardAvoidingView,
   Image,
   Alert
 } from 'react-native';
@@ -26,9 +27,11 @@ export default class LoginView extends Component {
 
   render() {
     return (
+      
       <View style={styles.container}>
       <Image style={styles.inputIcon} source={{uri: 'https://reactnative.dev/img/tiny_logo.png',}}/>
               <Text style={{fontSize:40,color:'grey', paddingTop:10}}>SIGN IN</Text>
+
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon}/> 
           <TextInput style={styles.inputs}
@@ -51,14 +54,12 @@ export default class LoginView extends Component {
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('restore_password')}>
-            <Text>Forgot your password?</Text>
-        </TouchableHighlight>
 
         <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('register')}>
-            <Text>Register</Text>
+            <Text>New user..?Click here to Register</Text>
         </TouchableHighlight>
       </View>
+     
     );
   }
 }
