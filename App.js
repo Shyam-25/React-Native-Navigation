@@ -103,7 +103,7 @@ const styles=StyleSheet.create({
     marginTop:10,
     alignSelf: 'flex-end',
     justifyContent: 'flex-end'
-  }
+  },
   textContainer:{
     paddingLeft:10,
     paddingRight:100,
