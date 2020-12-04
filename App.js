@@ -1,7 +1,8 @@
-import React from 'react';
-import { Text, View, SectionList, Stylesheet } from 'react-native';
+import React from "react";
+import { Text, View, SectionList, StyleSheet } from 'react-native';
+import { Component } from 'react';
 
-const year2019=[
+const year2019= [ 
   {
     id:'1',
     value:'An event with a single day',
@@ -54,13 +55,17 @@ const DATA= [
 
 SectionListItems = ({ items }) =>(
   <View styles={styles.container}>
-    <Text style={{fontSize:40,color:'grey', paddingTop:10,fontWeight:'bold'}}>Test Milestones</Text>
+  {/* <View style={styles.imageHolder}>
+  <Image source={{uri: 'https://reactnative.dev/img/tiny_logo.png'}} style={styles.imageContainer}/>
+     */}
 
     <View style={styles.inputcontainer}>
-      <Text style={styles.text}>{items.value}</Text>
-      <Text style={styles.days}>{items.days}</Text>
-      <Text style={styles.month}>{items.month}</Text>
-      <Text style={styles.content}>{items.content}</Text>
+      <Text style={styles.text}>  {items.value}</Text>
+      <Text style={styles.days}>   {items.days}</Text>
+      <Text style={styles.month}>  {items.month} {items.content} </Text>  
+     
+
+      
 
       
     </View>
@@ -72,11 +77,13 @@ export default class App extends React.Component {
   render() {
     return (
       <View >
+      <Text style={{fontSize:40,color:'black', paddingTop:10,fontWeight:'bold'}}>  Test Milestones</Text>
+      
         <SectionList
           sections={DATA}
           renderItem={({item})=><SectionListItems items={item}/>}
           renderSectionHeader={({ section: { title } }) => (
-            <Text style={styles.header}>{title}</Text>
+            <Text style={styles.header}>      {title}</Text>
           )}
          />
       </View>
@@ -84,39 +91,65 @@ export default class App extends React.Component {
   }
 }
 
-const styles=Stylesheet.create({
+
+const styles=StyleSheet.create({
   header:{
-    paddingLeft:10,
-    fontSize:14,
-    paddingBottom:5,
-    fontWeight:'bold',
+    
+    fontSize:25,
+    backgroundColor: 'grey',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth:15,
+    borderBottomColor:'grey',
+   
+    // fontWeight:'bold',
   },
   container:{
     flexDirection:'row',
-    backgroundColor:'#ffffff',
+    backgroundColor:'red',
+    borderBottomWidth:10
   },
+  
   inputcontainer:{
-    paddingTop:20,
-    paddingBottom:20,
-    paddingRight:20,
     paddingLeft:10,
-    flexDirection:'row',
-    backgroundColor:'#00F'
+    paddingRight:40,
+    borderBottomColor:'red',
+    fontSize: 23,
+    // borderBottomWidth:8,
+    backgroundColor:'white',
+    flexDirection:'column',
+    fontStyle: 'italic',
+   
   },
   text:{
-    fontsize:'20',
+    
+    paddingBottom:10,
+    justifyContent:'space-evenly',
+    fontSize:25 ,
+    backgroundColor:'white',
     fontWeight:'bold'
 
   },
   days:{
-    fontsize:'10',
+    fontSize:18,
+    fontWeight:'bold'
 
   },
   month:{
-    fontsize:'10',
+    fontSize:18,
+    // fontWeight:'bold',
+   
   },
   content:{
-    fontsize:'10'
+    fontSize:15,
+    alignContent:'center',
+    textDecorationLine: "underline",
+   
+    paddingLeft:10,
+    paddingRight:100,
+    // backgroundColor:'grey'
+   
+
   },
 
-})
+});
