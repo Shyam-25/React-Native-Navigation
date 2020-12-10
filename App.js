@@ -1,70 +1,39 @@
-import React, { Component } from "react";
-import {View,Text,Image, StyleSheet,Button,Alert, TouchableOpacity} from "react-native";
-import DateTimePicker from '@react-native-community/datetimepicker';
-import ImagePicker from 'react-native-image-picker'
-
-const options={
-  title:'My Gallery',
-  takePhotoButtonTitle:'Take photo with your camera',
-  chooseFromLibraryButtonTitle:'choose photo from gallery',
-}
-export default class App extends Component {
-  constructor(props){
-    super(props);
-    this.state={
-      imageSource:null
-    }
-  }
+import React, { useState } from 'react';  
+import {StyleSheet,Text,View,TextInput, Button} from 'react-native';  
   
-    myfun=() => {
-    
-    ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
-    
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else {
-        const source = { uri: response.uri };
-        this.setState({
-          imageSource: source,
-        });
-      }
-    });
+export default function App() {
+  const [name, setName] = useState('Shyam');
+  const [person, setPerson] = useState({ name: 'Ashwin', age:'21'});
+
+  const clickHandler = () => {
+    setName('Sundar');
+    setPerson({ name:'Warner', age:'33'});
   }
-  
 
-
-  render () {
-    return (
-      <View styles={styles.container}>
-        <Text style={styles.welcome}>Welcome to React native</Text>
-
-        <Image source={this.state.imageSource}
-        style={{width:100,height:300,margin:10}}></Image>
-
-
-        <TouchableOpacity style={{backgroundColor:'green',margin:10,padding:10}}
-        onPress={this.myfun}>
-        
-          <Text style={{color:'#fff'}}>Select Image</Text>
-        </TouchableOpacity>
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>My name is {name}</Text>
+      <Text>His name is {person.name} and his age is{person.age}</Text>
+      <View style={styles.buttonContainer}>
+        <Button title='Update State' onPress={clickHandler} />
       </View>
-    );
-  }
+    </View>
+  )
 }
-  
-const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'#fff'
-  },
-  welcome:{
-    fontSize:20,
-    textAlign:'center'
-  }
-
-}); 
+    
+    
+const styles = StyleSheet.create({  
+    container: {  
+      flex: 1,  
+      justifyContent: 'center',  
+      alignItems: 'center', 
+      backgroundColor: '#fff' 
+    },
+    buttonContainer:{
+      marginTop: 20
+    },
+    text:{
+      fontSize:20,
+      fontWeight:'bold'
+    }
+});
