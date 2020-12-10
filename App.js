@@ -1,55 +1,23 @@
 import React, { Component } from "react";
-import {View,Text, StyleSheet,Button,Alert} from "react-native";
-import DateTimePicker from '@react-native-community/datetimepicker';
+import {View , Alert} from "react-native";
+import { CustomPicker } from 'react-native-custom-picker'
 
-
-
-class SimplePicker extends Component{
-
-state={
-  DATE:new Date(),
-  touched:false
-}
-onHandeler=(date)=>{
- this.setState({DATE:date})
-  console.log(this.state.DATE)
-}
-onPressed=()=>{
-this.setState({touched:true})
-}
-
-
+class Picker extends Component{
 render (){
+  const options = ['C', 'C++', 'Java', 'React-native', 'Javascript'] 
   return(
-    <View style={styles.container}>
-    
-      <Button title ='Date' onPress={this.onPressed}/> 
-        {this.state.touched&&(<DateTimePicker
-        mode='date'
-        maximumDate={new Date(2025,4,20)}
-        minimumDate={new Date(2019,1,12)}
-        value={this.state.DATE}
-        onChange={this.onHandeler}
-        is24Hour={true}
-        />)}
-        
+
+      <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
+        <CustomPicker
+        options={options}
+        onValueChange={value => {
+          Alert.alert('Selected course', value || 'No course are selected!')
+        }}/>
     </View>
     
   )
-  
 }
 }
 
-const styles= StyleSheet.create({
-  container:{
-padding:80,
-  },
-  pickerElement:{
-    width:150,
-    borderColor:'black',
-    borderWidth:2,
-    height:40,
-  },
 
-});
-export default SimplePicker;
+export default Picker;

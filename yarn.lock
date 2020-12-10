@@ -4573,6 +4573,11 @@
 "react-is@^17.0.1":
   "version" "17.0.1"
 
+"react-native-custom-picker@^0.4.0":
+  "integrity" "sha512-zhpt3pEYo/6xH2F0+G//SCo3Q7QddAS8/Xrrwc8Cif/PfaPU15cEMUakBGyJ/5vAv67RtF74WQcGhfA4RS09xg=="
+  "resolved" "https://registry.npmjs.org/react-native-custom-picker/-/react-native-custom-picker-0.4.0.tgz"
+  "version" "0.4.0"
+
 "react-native-windows@>=0.62":
   "integrity" "sha512-o44H6/wYrYk8yMzTcfejzXuJRo9+W2dtOrI1LocdVdLGTg04/8TH7lntGo8wkD3YUADmhKanC2NcUryxZkR8rA=="
   "resolved" "https://registry.npmjs.org/react-native-windows/-/react-native-windows-0.63.13.tgz"
@@ -4598,7 +4603,7 @@
     "use-subscription" "^1.0.0"
     "whatwg-fetch" "^3.0.0"
 
-"react-native@^0.63.0-0", "react-native@>=0.60", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@0.63.3":
+"react-native@*", "react-native@^0.63.0-0", "react-native@>=0.60", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@0.63.3":
   "version" "0.63.3"
   dependencies:
     "@babel/runtime" "^7.0.0"
@@ -4640,7 +4645,7 @@
     "react-is" "^16.8.6"
     "scheduler" "^0.19.1"
 
-"react@^16.13.1", "react@^16.8.0 || ^17.0.0", "react@>=16.8.3", "react@16.13.1":
+"react@*", "react@^16.13.1", "react@^16.8.0 || ^17.0.0", "react@>=16.8.3", "react@16.13.1":
   "version" "16.13.1"
   dependencies:
     "loose-envify" "^1.1.0"
