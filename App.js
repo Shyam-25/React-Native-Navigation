@@ -16,7 +16,7 @@ export default class App extends Component {
     }
   }
   
-    myfun() => {
+    myfun=() => {
     
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
@@ -33,7 +33,7 @@ export default class App extends Component {
       }
     });
   }
-  }
+  
 
 
   render () {
@@ -45,7 +45,8 @@ export default class App extends Component {
         style={{width:100,height:300,margin:10}}></Image>
 
 
-        <TouchableOpacity style={{backgroundColor:'green',margin:10,padding:10}}>
+        <TouchableOpacity style={{backgroundColor:'green',margin:10,padding:10}}
+        onPress={this.myfun}>
         
           <Text style={{color:'#fff'}}>Select Image</Text>
         </TouchableOpacity>
