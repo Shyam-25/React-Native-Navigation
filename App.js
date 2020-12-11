@@ -1,39 +1,46 @@
-import React, { useState } from 'react';  
-import {StyleSheet,Text,View,TextInput, Button} from 'react-native';  
-  
-export default function App() {
-  const [name, setName] = useState('Shyam');
-  const [person, setPerson] = useState({ name: 'Ashwin', age:'21'});
+import React from 'react'
+import { StyleSheet, Text, View, Button } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 
-  const clickHandler = () => {
-    setName('Sundar');
-    setPerson({ name:'Warner', age:'33'});
-  }
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>My name is {name}</Text>
-      <Text>His name is {person.name} and his age is{person.age}</Text>
-      <View style={styles.buttonContainer}>
-        <Button title='Update State' onPress={clickHandler} />
-      </View>
-    </View>
-  )
+function HomeScreen({ navigation }) {
+    return (
+        <View>
+            <Text>Home Screen</Text>
+            <Button title='go to details'
+            onPress={() => navigation.navigate('Details')} />
+        </View>
+    )
 }
-    
-    
-const styles = StyleSheet.create({  
-    container: {  
-      flex: 1,  
-      justifyContent: 'center',  
-      alignItems: 'center', 
-      backgroundColor: '#fff' 
+
+
+function DetailScreen() {
+    return (
+        <View>
+            <Text>Detail Screen</Text>
+        </View>
+    )
+}
+
+const Stack = createStackNavigator()
+
+export default function App() {
+    return(
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName='Home'>
+                <Stack.Screen name='Home' component={HomeScreen} />
+                <Stack.Screen name='Details' component={DetailScreen} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    )
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    buttonContainer:{
-      marginTop: 20
-    },
-    text:{
-      fontSize:20,
-      fontWeight:'bold'
-    }
-});
+})
