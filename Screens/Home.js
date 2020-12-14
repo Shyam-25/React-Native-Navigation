@@ -1,48 +1,28 @@
-import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import React from "react";
+import { View, Button, Text, StyleSheet } from "react-native";
 
-function Home(props) {
-    const data = {
-        name: 'Shyam Sundar S ',
-        home: 'Mayiladuthurai'
-        // species: 'human'
-      };
-  const { navigation } = props;
+const Home = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Home Screen</Text>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Details', { item: data })}
-      >
-        <Text style={styles.buttonText}>Go to Detail Screen</Text>
-      </TouchableOpacity>
+    <View style={styles.center}>
+      <Text style={styles.container}>This is the home screen</Text>
+      <Button
+        title="Go to About Screen"
+        onPress={() => navigation.navigate("About")} 
+      />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
+  center: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'pink'
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
   },
-  text: {
-    color: '#ff0',
-    fontSize: 24,
-    fontWeight: 'bold',
-    backgroundColor:'#000'
-  },
-  buttonContainer: {
-    backgroundColor: '#222',
-    borderRadius: 5,
-    padding: 10,
-    margin: 20
-  },
-  buttonText: {
-    fontSize: 20,
-    color: '#fff'
+  container: {
+    fontSize: 25,
+    fontWeight: 'bold'
   }
 });
 

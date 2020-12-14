@@ -4,7 +4,7 @@ import { StyleSheet, View, Text } from 'react-native';
 function Details(props) {
     const { route } = props;
     const { item } = route.params;
-    const { name, home,  } = item;
+    const { name, home  } = item;
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Detail Screen</Text>

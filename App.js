@@ -1,7 +1,13 @@
-import React from 'react';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
 
-import MainStackNavigator from './navigation/MainStackNavigator';
+import DrawerNavigator from './navigation/DrawerNavigator';
 
-export default function App() {
-  return <MainStackNavigator />;
-}
+const App = () => {
+  return (
+    <NavigationContainer>
+      <DrawerNavigator />
+    </NavigationContainer>
+  );
+};
+export default App;
