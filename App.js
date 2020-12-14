@@ -7,8 +7,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 function HomeScreen({ navigation }) {
     return (
         <View>
-            <Text>Home Screen</Text>
-            <Button title='go to details'
+            <Text style={{fontSize:50}}>App component</Text>
+            <Button title='go to profile'
             onPress={() => navigation.navigate('Details')} />
         </View>
     )
@@ -18,7 +18,7 @@ function HomeScreen({ navigation }) {
 function DetailScreen() {
     return (
         <View>
-            <Text>Detail Screen</Text>
+            <Text style={{ fontSize: 50}}>Profile component</Text>
         </View>
     )
 }
