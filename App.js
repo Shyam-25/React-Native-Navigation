@@ -1,13 +1,37 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import React, { Component } from 'react';
+// import { Text, View, StyleSheet ,TouchableOpacity } from 'react-native';
+import { createStore } from 'redux';
+import CounterApp from './src/CounterApp';
+import {Provider} from 'react-redux';
 
-import DrawerNavigator from './navigation/DrawerNavigator';
+const initialState = {
+  counter: 0
+}
+const reducer = (state=initialState,action) => {
+  switch(action.type)
+  {
+    case 'INCREASE_COUNTER':
+      return{counter:state.counter+1}
+    case 'DECREASE_COUNTER':
+      return{counter:state.counter-1}
+  }
+  return state
+}
+const store = createStore(reducer)
+class App extends Component {
 
-const App = () => {
-  return (
-    <NavigationContainer>
-      <DrawerNavigator />
-    </NavigationContainer>
-  );
-};
+ 
+  render() {
+
+    
+
+    return(
+        <Provider store= { store}>    
+        <CounterApp />
+        </Provider>
+      
+    );
+  }
+}
 export default App;
+
