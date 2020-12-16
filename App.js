@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import { Text, View, StyleSheet ,TouchableOpacity } from 'react-native';
 import { createStore } from 'redux';
-import CounterApp from './src/CounterApp';
+import Counter from './Source/Counter';
 import {Provider} from 'react-redux';
 
 const initialState = {
@@ -27,11 +27,10 @@ class App extends Component {
 
     return(
         <Provider store= { store}>    
-        <CounterApp />
+        <Counter />
         </Provider>
       
     );
   }
 }
 export default App;
-
