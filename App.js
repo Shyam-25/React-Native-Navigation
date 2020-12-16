@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Text, View, StyleSheet ,TouchableOpacity } from 'react-native';
+
 import { createStore } from 'redux';
 import Counter from './Source/Counter';
 import {Provider} from 'react-redux';
