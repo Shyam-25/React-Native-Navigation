@@ -1,46 +1,46 @@
-import React from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+import React from 'react';
+import { Text, View } from 'react-native';
+import axios from 'axios';
 
+class App extends React.Component {
 
-function HomeScreen({ navigation }) {
+  constructor()
+  {
+    super ()
+    this.state = {
+      data:[]
+    }
+  }
+
+  componentDidMount()
+  {
+    this.getapiData()
+  }
+  async getapiData()
+  {
+    let resp=await axios.get('https://reactnative.dev/movies.json')
+
+    console.warn(resp.data.movies)
+    this.setState({data: resp.data.movies })
+  }
+  render() {
     return (
+      <View style={ { flex:1, margin: 70 }} >
+      {
+        this.state.length>0?
         <View>
-            <Text>Home Screen</Text>
-            <Button title='go to details'
-            onPress={() => navigation.navigate('Details')} />
-        </View>
+        {
+              this.state.data.map((item)=>
+              <Text style={{fontSize:40}}>{item.title},{item.releaseYear}</Text>)
+        }
+        </View> : <Text style={{fontSize:40}}> data is loading.. </Text>
+        
+                   
+      }
+        
+      </View>
     )
+  }
 }
 
-
-function DetailScreen() {
-    return (
-        <View>
-            <Text>Detail Screen</Text>
-        </View>
-    )
-}
-
-const Stack = createStackNavigator()
-
-export default function App() {
-    return(
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName='Home'>
-                <Stack.Screen name='Home' component={HomeScreen} />
-                <Stack.Screen name='Details' component={DetailScreen} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    )
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-})
+export default App;
