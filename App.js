@@ -1,36 +1,53 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { createStore } from 'redux';
-import Counter from './Source/Counter';
-import {Provider} from 'react-redux';
-
-const initialState = {
-  counter: 0
-}
-const reducer = (state=initialState,action) => {
-  switch(action.type)
-  {
-    case 'INCREASE_COUNTER':
-      return{counter:state.counter+1}
-    case 'DECREASE_COUNTER':
-      return{counter:state.counter-1}
-  }
-  return state
-}
-const store = createStore(reducer)
-class App extends Component {
-
- 
+export default class App extends React.Component {
   render() {
+    return (
+      <View style={styles.container}>
+      <TouchableOpacity onPress={this.saveData}>
+        <Text style={{fontSize:25}}>Save Data</Text>
+        </TouchableOpacity>
 
-    
+        <TouchableOpacity onPress={this.displayData}>
+        <Text style={{fontSize:25}}>Display Data</Text>
+        </TouchableOpacity>
 
-    return(
-        <Provider store= { store}>    
-        <Counter />
-        </Provider>
-      
+      </View>
     );
   }
+  saveData() {
+    let obj = {
+      name: 'Shyam Sundar',
+      City: 'Chennai',
+      department: 'Mobility'
+    }
+    AsyncStorage.setItem('user', JSON.stringify(obj));
+    
+  } 
+  displayData = async () => {
+    try {
+      let user = await AsyncStorage.getItem('User');
+      let parsed = JSON.parse(user);
+      alert(parsed.City);
+
+    }
+
+    catch(error) {
+      alert(error);
+
+    }
+  }
 }
-export default App;
+
+
+
+const styles = StyleSheet.create ({
+  container: {
+    flex:1,
+    backgroundColor: 'pink',
+    alignItems : 'center',
+    justifyContent: 'center'
+  },
+});
