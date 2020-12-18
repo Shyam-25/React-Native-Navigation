@@ -1,46 +1,36 @@
-import React from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+import React, { Component } from 'react';
+// import { Text, View, StyleSheet ,TouchableOpacity } from 'react-native';
+import { createStore } from 'redux';
+import CounterApp from './Source/CounterApp';
+import {Provider} from 'react-redux';
 
-
-function HomeScreen({ navigation }) {
-    return (
-        <View>
-            <Text>Home Screen</Text>
-            <Button title='go to details'
-            onPress={() => navigation.navigate('Details')} />
-        </View>
-    )
+const initialState = {
+  counter: 0
 }
-
-
-function DetailScreen() {
-    return (
-        <View>
-            <Text>Detail Screen</Text>
-        </View>
-    )
+const reducer = (state=initialState,action) => {
+  switch(action.type)
+  {
+    case 'INCREMENT_COUNTER':
+      return{counter:state.counter+1}
+    case 'DECREMENT_COUNTER':
+      return{counter:state.counter-1}
+  }
+  return state
 }
+const store = createStore(reducer)
+class App extends Component {
 
-const Stack = createStackNavigator()
+ 
+  render() {
 
-export default function App() {
+    
+
     return(
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName='Home'>
-                <Stack.Screen name='Home' component={HomeScreen} />
-                <Stack.Screen name='Details' component={DetailScreen} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    )
+        <Provider store= { store}>    
+        <CounterApp />
+        </Provider>
+      
+    );
+  }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-})
+export default App;
