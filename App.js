@@ -1,46 +1,65 @@
-import React from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+import React from 'react';
+import {Text,FlatList,View, StyleSheet } from 'react-native';
 
+import axios from 'axios';
 
-function HomeScreen({ navigation }) {
-    return (
-        <View>
-            <Text>Home Screen</Text>
-            <Button title='go to details'
-            onPress={() => navigation.navigate('Details')} />
-        </View>
-    )
+class App extends React.Component {
+    constructor()
+    {
+      super ()
+      this.state = {
+        nameList:[],
+        isLoading:true,     
+       }
+    }
+
+    async componentDidMount(){
+        const  response = await axios.get('https://reactnative.dev/movies.json');
+        const item = await response.data.movies;
+        this.setState({nameList:item})
+        console.log(this.state.nameList)
+        console.log(this.state.isLoading)
+        console.log(this.state.nameList.length)
+        
+    }
+
+    render() {
+        const { nameList, isLoading } = this.state;
+        return (
+           
+            <View styles={styles.container}>
+            {isLoading?(
+                <FlatList
+                data={nameList}
+                keyExtractor={({ id }) => id}
+                renderItem={({ item }) => (
+                    
+                   
+                    <Text style= {styles.text}> Name :  {item.title},    ReleaseYear:  {item.releaseYear}</Text>
+                )}
+                />
+                ) :<Text>DATA is Loading</Text>
+            }
+            </View>
+          
+     
+        );
+    }
 }
 
-
-function DetailScreen() {
-    return (
-        <View>
-            <Text>Detail Screen</Text>
-        </View>
-    )
-}
-
-const Stack = createStackNavigator()
-
-export default function App() {
-    return(
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName='Home'>
-                <Stack.Screen name='Home' component={HomeScreen} />
-                <Stack.Screen name='Details' component={DetailScreen} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    )
-}
-
-const styles = StyleSheet.create({
-    container: {
+export default App;
+const styles=StyleSheet.create({
+    container:{
+        padding:20,
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        
     },
-})
+    text:{
+      fontSize:20,
+      margin:20,
+      backgroundColor:'#000',
+      color:'#ff0',
+      fontWeight:'bold'
+    }
+    
+});
