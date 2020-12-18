@@ -1,65 +1,36 @@
-import React from 'react';
-import {Text,FlatList,View, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+// import { Text, View, StyleSheet ,TouchableOpacity } from 'react-native';
+import { createStore } from 'redux';
+import CounterApp from './Source/CounterApp';
+import {Provider} from 'react-redux';
 
-import axios from 'axios';
-
-class App extends React.Component {
-    constructor()
-    {
-      super ()
-      this.state = {
-        nameList:[],
-        isLoading:true,     
-       }
-    }
-
-    async componentDidMount(){
-        const  response = await axios.get('https://reactnative.dev/movies.json');
-        const item = await response.data.movies;
-        this.setState({nameList:item})
-        console.log(this.state.nameList)
-        console.log(this.state.isLoading)
-        console.log(this.state.nameList.length)
-        
-    }
-
-    render() {
-        const { nameList, isLoading } = this.state;
-        return (
-           
-            <View styles={styles.container}>
-            {isLoading?(
-                <FlatList
-                data={nameList}
-                keyExtractor={({ id }) => id}
-                renderItem={({ item }) => (
-                    
-                   
-                    <Text style= {styles.text}> Name :  {item.title},    ReleaseYear:  {item.releaseYear}</Text>
-                )}
-                />
-                ) :<Text>DATA is Loading</Text>
-            }
-            </View>
-          
-     
-        );
-    }
+const initialState = {
+  counter: 0
 }
+const reducer = (state=initialState,action) => {
+  switch(action.type)
+  {
+    case 'INCREMENT_COUNTER':
+      return{counter:state.counter+1}
+    case 'DECREMENT_COUNTER':
+      return{counter:state.counter-1}
+  }
+  return state
+}
+const store = createStore(reducer)
+class App extends Component {
 
-export default App;
-const styles=StyleSheet.create({
-    container:{
-        padding:20,
-        flex: 1,
-        
-    },
-    text:{
-      fontSize:20,
-      margin:20,
-      backgroundColor:'#000',
-      color:'#ff0',
-      fontWeight:'bold'
-    }
+ 
+  render() {
+
     
-});
+
+    return(
+        <Provider store= { store}>    
+        <CounterApp />
+        </Provider>
+      
+    );
+  }
+}
+export default App;
