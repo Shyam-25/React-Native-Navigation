@@ -1,46 +1,72 @@
-import React, { Component } from 'react';
-import { StyleSheet , Text, View, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet , Text, View, SafeAreaView, FlatList, ActivityIndicator } from 'react-native';
 
-export default class App extends Component {
+const movieURL = 'https://reactnative.dev/movies.json';
 
-  constructor(){
-    super();
-    this.state = {text:''};
-  }
-  render () {
-    return (
-      <View style = {styles.container}>
-      <Button onPress={this.postData} title='post data' />
-        <Text style ={styles.text}>{this.state.text}</Text>
-      </View>
-    );
-  }
+const App = () => {
 
-  postData = async () => {
-    let formData = new FormData();
-    // formData.append('username','admin');
-    // formData.append('password','admin');
+  const [isLoading, setLoading ] = useState(true);
+  const [data, setData] = useState([]);
+  const [title, setTitle] = useState ([]);
+  const [description, setDescription] = useState ([]);
 
+  useEffect(() => {
+    fetch(movieURL)
+    .then((response) => response.json())
+    .then((json)=> {
+      setData(json.movies);
+      setTitle(json.title);
+      setDescription(json.description);
+  })
+    .catch((error) => alert(error))
+    .finally(setLoading(false));
+  });
+  return (
+    <SafeAreaView style = {styles.container}>
+    {isLoading ? (<ActivityIndicator /> 
+    ) : (
+      <View>
+      <Text style={styles.title}>{title}</Text>
+      <View style={{ borderBottomWidth: 1, marginBottom: 10}} />
+      <FlatList 
+      data = {data}
+      keyExtractor = {({id}, index) => id}
+      renderItem={({ item }) => (
+        <View style={{ paddingBottom: 10}} >
+        <Text style={styles.movieText}>
+          {item.title}
+          {item.releaseYear}
+        </Text>;
+        </View>
+      )}
+    />
+    <Text style={styles.description}>{description}</Text>
+    </View>
+    )}
+      {/* <Text>HIIII</Text> */}
+    </SafeAreaView>
+  );
 
-    this.setState({ text:'click'})
-    fetch('https://reactnative.dev/movies.json',{
-      method:'POST',
-      body: formData
-    }).then((response) => response.JSON())
-    this.setState({text: JSON.stringify(responseJSON)})
-  }
-}
+};
+export default App;
 
 const styles = StyleSheet.create({
   container:{
-    flex:1,
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor: 'pink'
-    
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  text:{
-    fontSize:25,
-    margin: 10
-  }
+  movieText:{
+    fontSize: 25,
+    fontWeight: '200',
+  },
+  title:{
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  description:{
+    textAlign: 'center',
+    marginBottom: 15,
+    fontWeight: "200"
+  },
 });
