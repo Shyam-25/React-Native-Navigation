@@ -1,36 +1,33 @@
-import React, { Component } from 'react';
-// import { Text, View, StyleSheet ,TouchableOpacity } from 'react-native';
-import { createStore } from 'redux';
-import CounterApp from './Source/CounterApp';
-import {Provider} from 'react-redux';
+import React from 'react';
+import { StyleSheet , Text, View } from 'react-redux';
 
-const initialState = {
-  counter: 0
-}
-const reducer = (state=initialState,action) => {
-  switch(action.type)
-  {
-    case 'INCREMENT_COUNTER':
-      return{counter:state.counter+1}
-    case 'DECREMENT_COUNTER':
-      return{counter:state.counter-1}
+export class App extends React.Component {
+  async componentDidMount() {
+
+    try {
+      await fetch('https://reactnative.dev/movies.json', {
+        method:'post',
+        mode: 'no-cors';
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+          username: 'shyam',
+        })
+      });
+
+    } catch(e) {
+      console.log(e);
+
+
+    }
+
   }
-  return state
-}
-const store = createStore(reducer)
-class App extends Component {
 
- 
   render() {
-
-    
-
-    return(
-        <Provider store= { store}>    
-        <CounterApp />
-        </Provider>
-      
+    return (
+     <View> <Text>Hello</Text> </View>
     );
   }
 }
-export default App;
