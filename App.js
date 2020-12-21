@@ -1,46 +1,46 @@
-import React from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+import React, { Component } from 'react';
+import { StyleSheet , Text, View, Button } from 'react-native';
 
+export default class App extends Component {
 
-function HomeScreen({ navigation }) {
+  constructor(){
+    super();
+    this.state = {text:''};
+  }
+  render () {
     return (
-        <View>
-            <Text>Home Screen</Text>
-            <Button title='go to details'
-            onPress={() => navigation.navigate('Details')} />
-        </View>
-    )
-}
+      <View style = {styles.container}>
+      <Button onPress={this.postData} title='post data' />
+        <Text style ={styles.text}>{this.state.text}</Text>
+      </View>
+    );
+  }
+
+  postData = async () => {
+    let formData = new FormData();
+    // formData.append('username','admin');
+    // formData.append('password','admin');
 
 
-function DetailScreen() {
-    return (
-        <View>
-            <Text>Detail Screen</Text>
-        </View>
-    )
-}
-
-const Stack = createStackNavigator()
-
-export default function App() {
-    return(
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName='Home'>
-                <Stack.Screen name='Home' component={HomeScreen} />
-                <Stack.Screen name='Details' component={DetailScreen} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    )
+    this.setState({ text:'click'})
+    fetch('https://reactnative.dev/movies.json',{
+      method:'POST',
+      body: formData
+    }).then((response) => response.JSON())
+    this.setState({text: JSON.stringify(responseJSON)})
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-})
+  container:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor: 'pink'
+    
+  },
+  text:{
+    fontSize:25,
+    margin: 10
+  }
+});
