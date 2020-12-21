@@ -1,46 +1,53 @@
-import React from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+i
+import React from 'react';
+import { StyleSheet , Text, View, TouchableOpacity } from 'react-native';
+import axios from 'axios';
+import { ScrollView } from 'react-native-gesture-handler'
 
+export default class App extends Comment {
 
-function HomeScreen({ navigation }) {
-    return (
-        <View>
-            <Text>Home Screen</Text>
-            <Button title='go to details'
-            onPress={() => navigation.navigate('Details')} />
-        </View>
-    )
-}
+  state={
+    data:'',
+    post:'',
+    isLoading: true,
+  }
 
-
-function DetailScreen() {
-    return (
-        <View>
-            <Text>Detail Screen</Text>
-        </View>
-    )
-}
-
-const Stack = createStackNavigator()
-
-export default function App() {
+  getData = () => {
+    axios
+    .get('https://reactnative.dev/movies.json')
+    .then(function(response){
+      alert(JSON.stringify(response.data));
+    })
+    .catch(function (error){
+      alert(error.message);
+    })
+    .finally(function(){
+      alert('finally called')
+    });
+  }
+  render(){
     return(
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName='Home'>
-                <Stack.Screen name='Home' component={HomeScreen} />
-                <Stack.Screen name='Details' component={DetailScreen} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    )
+      <ScrollView>
+      <View style={styles.container}>
+        <Text style= {{ fontSize: 25, textAlign:'center'}}> Axios</Text>
+      </View>
+
+      <TouchableOpacity 
+       onPress={this.getData}
+       >
+       
+        <Text>Get</Text>
+       
+      </TouchableOpacity>
+      </ScrollView>
+
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+  container:{
+    flex:1,
+    backgroundColor:'pink'
+  }
 })
