@@ -1,33 +1,46 @@
-import React from 'react';
-import { StyleSheet , Text, View } from 'react-redux';
+import React, { Component } from 'react';
+import { StyleSheet , Text, View, Button } from 'react-native';
 
-export class App extends React.Component {
-  async componentDidMount() {
+export default class App extends Component {
 
-    try {
-      await fetch('https://reactnative.dev/movies.json', {
-        method:'post',
-        mode: 'no-cors';
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type':'application/json'
-        },
-        body: JSON.stringify({
-          username: 'shyam',
-        })
-      });
-
-    } catch(e) {
-      console.log(e);
-
-
-    }
-
+  constructor(){
+    super();
+    this.state = {text:''};
   }
-
-  render() {
+  render () {
     return (
-     <View> <Text>Hello</Text> </View>
+      <View style = {styles.container}>
+      <Button onPress={this.postData} title='post data' />
+        <Text style ={styles.text}>{this.state.text}</Text>
+      </View>
     );
   }
+
+  postData = async () => {
+    let formData = new FormData();
+    // formData.append('username','admin');
+    // formData.append('password','admin');
+
+
+    this.setState({ text:'click'})
+    fetch('https://reactnative.dev/movies.json',{
+      method:'POST',
+      body: formData
+    }).then((response) => response.JSON())
+    this.setState({text: JSON.stringify(responseJSON)})
+  }
 }
+
+const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor: 'pink'
+    
+  },
+  text:{
+    fontSize:25,
+    margin: 10
+  }
+});
