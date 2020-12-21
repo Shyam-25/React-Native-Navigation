@@ -36,7 +36,7 @@ const App = () => {
         <Text style={styles.movieText}>
           {item.title}
           {item.releaseYear}
-        </Text>;
+        </Text>
         </View>
       )}
     />
