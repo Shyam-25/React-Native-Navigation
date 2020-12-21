@@ -1,72 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet , Text, View, SafeAreaView, FlatList, ActivityIndicator } from 'react-native';
+i
+import React from 'react';
+import { StyleSheet , Text, View, TouchableOpacity } from 'react-native';
+import axios from 'axios';
+import { ScrollView } from 'react-native-gesture-handler'
 
-const movieURL = 'https://reactnative.dev/movies.json';
+export default class App extends Comment {
 
-const App = () => {
+  state={
+    data:'',
+    post:'',
+    isLoading: true,
+  }
 
-  const [isLoading, setLoading ] = useState(true);
-  const [data, setData] = useState([]);
-  const [title, setTitle] = useState ([]);
-  const [description, setDescription] = useState ([]);
+  getData = () => {
+    axios
+    .get('https://reactnative.dev/movies.json')
+    .then(function(response){
+      alert(JSON.stringify(response.data));
+    })
+    .catch(function (error){
+      alert(error.message);
+    })
+    .finally(function(){
+      alert('finally called')
+    });
+  }
+  render(){
+    return(
+      <ScrollView>
+      <View style={styles.container}>
+        <Text style= {{ fontSize: 25, textAlign:'center'}}> Axios</Text>
+      </View>
 
-  useEffect(() => {
-    fetch(movieURL)
-    .then((response) => response.json())
-    .then((json)=> {
-      setData(json.movies);
-      setTitle(json.title);
-      setDescription(json.description);
-  })
-    .catch((error) => alert(error))
-    .finally(setLoading(false));
-  });
-  return (
-    <SafeAreaView style = {styles.container}>
-    {isLoading ? (<ActivityIndicator /> 
-    ) : (
-      <View>
-      <Text style={styles.title}>{title}</Text>
-      <View style={{ borderBottomWidth: 1, marginBottom: 10}} />
-      <FlatList 
-      data = {data}
-      keyExtractor = {({id}, index) => id}
-      renderItem={({ item }) => (
-        <View style={{ paddingBottom: 10}} >
-        <Text style={styles.movieText}>
-          {item.title}
-          {item.releaseYear}
-        </Text>
-        </View>
-      )}
-    />
-    <Text style={styles.description}>{description}</Text>
-    </View>
-    )}
-      {/* <Text>HIIII</Text> */}
-    </SafeAreaView>
-  );
+      <TouchableOpacity 
+       onPress={this.getData}
+       >
+       
+        <Text>Get</Text>
+       
+      </TouchableOpacity>
+      </ScrollView>
 
-};
-export default App;
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container:{
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  movieText:{
-    fontSize: 25,
-    fontWeight: '200',
-  },
-  title:{
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-  description:{
-    textAlign: 'center',
-    marginBottom: 15,
-    fontWeight: "200"
-  },
-});
+    flex:1,
+    backgroundColor:'pink'
+  }
+})
