@@ -1,84 +1,80 @@
-import React, { Component } from 'react';
+import React, { useState,useEffect} from 'react';
+import{Button,StyleSheet,TextInput,View,Text} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
-
-import axios from 'axios';
-import { ScrollView } from 'react-native-gesture-handler';
-
-class App extends Component {
-    state={
-        data:'',
-        post:'',
-        multi1:'',
-        isloading:true,
-    }
-   
-
-   multipleRequestsInSingleCall = () => {
-       //const data='';
-    axios
-      .all([
-        axios
-          .get('https://jsonplaceholder.typicode.com/posts/1')
-          .then(function (response) {
-              //data=JSON.stringify(response.data);
-            console.log('Post 1 : ' + JSON.stringify(response.data));
-            
-          }),
-        axios
-          .get('https://jsonplaceholder.typicode.com/posts/2')
-          .then(function (response) {
-            //alert('Post 2 : ' + JSON.stringify(response.data));
-          }),
-      ])
-      .then(
-        axios.spread(function (acct, perms) {
-        alert('Both requests are now complete');
-        }),
-      );
-    //  this.setState({multi1:data});
-  };
-render(){
-  return (
-  <ScrollView>
-    <View style={styles.container}>
-      <Text style={{fontSize: 30, textAlign: 'center'}}>
-     Axio 
-      </Text>
-     
+ const STORAGE_KEY = '@save_name'
+ const App =()=> {
+ 
+    const [name, setName] = useState('')
+    const saveData = async () => {
+        try {
+          await AsyncStorage.setItem(STORAGE_KEY, name)
+          alert('Data successfully saved')
+        } catch (e) {
+          alert('Failed to save the data to the storage')
+        }
+      }
+    const readData = async () => {
+        try {
+          const userName = await AsyncStorage.getItem(STORAGE_KEY)
       
+          if (userName !== null) {
+            setName(userName)
+          }
+        } catch (e) {
+          alert('Failed to fetch the data from storage')
+        }
+    }
+    const clearStorage = async () => {
+        try {
+          await AsyncStorage.clear()
+          alert('Storage successfully cleared!')
+        } catch (e) {
+          alert('Failed to clear the async storage.')
+        }
+    }
+    const onChangeText = userName => setName(userName)
 
-      <TouchableOpacity
-        style={styles.buttonStyle}
-        onPress={this.multipleRequestsInSingleCall}>
-        <Text style={{fontSize:25, fontWeight:'bold' }}>Multiple Concurrent Requests In Single Call</Text>
-      </TouchableOpacity>
+    const onSubmitEditing = () => {
+        if (!name) return 
+        saveData(name)
+       
+        setName('')
+    }
+    useEffect(() => {
+    readData()
+    }, [])
+    return(
+      <View style={styles.container}>
+          <TextInput style={styles.textInput} value={name}
+          placeholder='Enter your Name' onChangeText={onChangeText}
+          onSubmitEditing={onSubmitEditing}/>
+          <Button title='Clear' onPress={clearStorage}/>
+          <Text style={styles.text}>Your Name is {name}</Text>
+      </View>
+    );
 
-      <Text style={{textAlign: 'center', marginTop: 18}}>
-            {this.state.data} 
-      </Text>
-      <Text style={{textAlign: 'center', marginTop: 18,margin:30,}}>
-            {this.state.post} 
-      </Text>
-    </View>
-    </ScrollView>
-  );
-}
 };
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    flex: 1,
-    padding: 16,
-  },
-  buttonStyle: {
-    alignItems: 'center',
-    backgroundColor: '#00F',
-    padding: 10,
-    width: '100%',
-    marginTop: 16,
-  },
-});
-
+const styles= StyleSheet.create({
+    container:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+        padding:20,
+        backgroundColor: 'pink'
+    },
+    textInput:{
+        borderColor:'black',
+        borderWidth:1,
+        width:150,
+        marginBottom:30,
+    },
+    text: {
+        fontSize: 24,
+        padding: 10,
+        backgroundColor: '#fff',
+        fontWeight:'bold'
+    },
+})
 export default App;
