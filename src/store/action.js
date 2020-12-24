@@ -1,17 +1,17 @@
-import { ADD_TODO,DELETE_TODO } from './actionTypes';
+import { ADD_ITEM,DELETE_ITEM } from "./actionTypes";
+let nextTodoId=0;
 
-let nextToDoID = 0;
-export const addTodo = task => ({
-    type: ADD_TODO,
-    payload:{
-        id: ++nextToDoID,
-        task
-    }
+export const addItem = task =>({
+type: ADD_ITEM,
+payload:{
+    id:++nextTodoId,
+    task
+}
 });
 
-export const deleteToDo = id => ({
-    type: DELETE_TODO,
+export const deleteItem = id =>({
+    type: DELETE_ITEM,
     payload:{
         id
     }
-});
+    });
