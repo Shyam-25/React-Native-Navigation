@@ -1,4 +1,4 @@
-import {ADD_ITEM,DELETE_ITEM } from "./actionTypes";
+import {ADD_ITEM,DELETE_ITEM,EDIT_ITEM } from "./actionTypes";
 const initialState={
     app_list:[]
 };
@@ -14,6 +14,20 @@ switch(action.type){
             ...state,
             app_list: state.app_list.filter((index)=>index.id !=id)
             }
+    }
+    case EDIT_ITEM :{
+        console.log(state.item_list.map(item =>
+            item.id === action.id ?
+            { ...item, task:action.task  } :
+              item
+          ))
+        return {...state,
+            item_list:state.item_list.map(item =>
+            item.id === action.id ?
+              { ...item, task:action.task  } :
+              item
+          )
+        }
     }
     default:
         return state;

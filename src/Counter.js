@@ -1,10 +1,14 @@
 import { TextInput, View, StyleSheet ,Button, FlatList,Text, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { addItem, deleteItem } from './store/action';
+import { addItem, deleteItem, editItem } from './store/action';
 
-const App = ({ app_list, addItem, deleteItem }) => {
+const App = ({ app_list, addItem, deleteItem, editItem }) => {
   const [task, setTask] = useState('');
+  const [isEditableVisible,setEditableVisible]=useState(false);
+  const intialvalue=[{id:'',task:''}]
+  const [editTask,setEditTask]=useState('');
+  const [editId,setEditId]=useState(0);
 
   const AddItem = () => {
     
@@ -24,12 +28,20 @@ const App = ({ app_list, addItem, deleteItem }) => {
     deleteItem(id)
   }
 
-  const openEdit=()=>{
-      console.log(task)
-      setEditTask(task);
-      setEditablevisible(true);
+  const EditItem =()=>{
+    setEditableVisible(false)
+    alert(editId + editTask)
+    editItem(editId,editTask)
     
   }
+  
+    const openEdit=(Id,editValue)=>{
+     console.log('data  ->  '+editValue)
+     setEditId(Id);
+     setEditTask(editValue);
+      console.log('ID  -> ' +Id);
+      setEditableVisible(true);
+    }
 
   const renderingItem=({item})=>{
     //console.log(item.task)
@@ -39,9 +51,18 @@ const App = ({ app_list, addItem, deleteItem }) => {
         <View style={styles.taskContainer}>
 
          
-        <TouchableOpacity onPress={()=>openEdit(data)}>
+        <TouchableOpacity onPress={()=>openEdit(data.id,data.task)}>
              <Text style={styles.edit}>Edit</Text>
          </TouchableOpacity>
+
+         {/* <Button title ='ADD' onPress={()=>EditItem()}>
+                    Add Task
+                  </Button> */}
+                  <TouchableOpacity style={styles.cancel} onPress={()=>setEditableVisible(false)}>
+                  <Text style={{color:'red'}}> Cancel </Text>
+                  </TouchableOpacity>
+
+
 
 
           <Text style={styles.taskTitle}> # DETAIL'S</Text>
@@ -55,6 +76,7 @@ const App = ({ app_list, addItem, deleteItem }) => {
           </View>
 
         </View>
+
 
       </View>
       )
@@ -139,7 +161,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = { addItem, deleteItem }
+const mapDispatchToProps = { addItem, deleteItem, editItem }
 
 export default connect(  mapStateToProps, mapDispatchToProps )(App)
  

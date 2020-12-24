@@ -1,4 +1,4 @@
-import { ADD_ITEM,DELETE_ITEM } from "./actionTypes";
+import { ADD_ITEM,DELETE_ITEM,EDIT_ITEM } from "./actionTypes";
 let nextTodoId=0;
 
 export const addItem = task =>({
@@ -15,3 +15,10 @@ export const deleteItem = id =>({
         id
     }
     });
+
+export const editItem = (id,task) =>({
+    type: EDIT_ITEM,
+    id,
+    task
+});
+    
