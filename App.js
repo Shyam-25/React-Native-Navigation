@@ -1,46 +1,79 @@
-import React from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+import React,{Component} from 'react';
+import {View, Text} from 'react-native';
 
+import {createBottomTabNavigator,createAppContainer} from 'react-navigation';
+import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
+import {Icon} from 'react-native-elements';
 
-function HomeScreen({ navigation }) {
-    return (
-        <View>
-            <Text>Home Screen</Text>
-            <Button title='go to details'
-            onPress={() => navigation.navigate('Details')} />
-        </View>
-    )
+import Profile from './Profile';
+import Cart from './Cart';
+
+ class Home extends Component
+{
+    render()
+    {
+        return(
+            <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+                <Text style={{fontSize:40}}>Home Screen</Text>
+            </View>
+        );
+    }
 }
 
+const TabNavigator=createMaterialBottomTabNavigator(
+    {
+        Home:{Screen:Home,
+            navigationOptions:{
+                tabBarLabel:'Home',
+                activeColor:'#ff0',
+                inactiveColor:'#000',
+                barStyle:{background:'#67baf6'},
+                tabBarIcon:()=>(
+                    <View>
+                        <Icon name={'home'} size={25} style={{color:'#ff0000'}} />
+                    </View>
+                )
 
-function DetailScreen() {
-    return (
-        <View>
-            <Text>Detail Screen</Text>
-        </View>
-    )
-}
+            }
+        
+        
+        
+        },
+        Home:{Screen:Profile,
+            navigationOptions:{
+                tabBarLabel:'Profile',
+                activeColor:'#ff0',
+                inactiveColor:'#000',
+                barStyle:{background:'#67baf6'},
+                tabBarIcon:()=>(
+                    <View>
+                        <Icon name={'person'} size={25} style={{color:'#ff0000'}} />
+                    </View>
+                )
 
-const Stack = createStackNavigator()
+            }
+        
+        
+        
+        },
+        Home:{Screen:Cart,
+            navigationOptions:{
+                tabBarLabel:'Cart',
+                activeColor:'#ff0',
+                inactiveColor:'#000',
+                barStyle:{background:'#67baf6'},
+                tabBarIcon:()=>(
+                    <View>
+                        <Icon name={'Shoping Cart'} size={25} style={{color:'#ff0000'}} />
+                    </View>
+                )
 
-export default function App() {
-    return(
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName='Home'>
-                <Stack.Screen name='Home' component={HomeScreen} />
-                <Stack.Screen name='Details' component={DetailScreen} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    )
-}
+            }
+        
+        
+        
+        }
+    }
+);
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-})
+export default createAppContainer(TabNavigator);
