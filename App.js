@@ -1,69 +1,114 @@
-import React, { Component } from 'react'
-import { StyleSheet, View, Alert ,TouchableOpacity,Text,ToastAndroid,CameraRoll} from 'react-native'
-import { RNCamera } from 'react-native-camera'
+import React, {Component} from 'react';
+import { StyleSheet, Text, View} from 'react-native';
+ 
+import Video from 'react-native-video';
+
+import MediaControls, { PLAYER_STATES } from 'react-native-media-controls';
 class App extends Component {
-
-  render() {
-    return (
+  videoPlayer;
+constructor(props) {
+    super(props);
+    this.state = {
+      currentTime: 0,
+      duration: 0,
+      isFullScreen: false,
+      isLoading: true,
+      paused: false,
+      playerState: PLAYER_STATES.PLAYING,
+      screenType:'content'
+};
+  }
+  onSeek = seek => {
+          this.videoPlayer.seek(seek);
+        };
+  onPaused = playerState => {
+          this.setState({
+            paused: !this.state.paused,
+            playerState,
+          });
+        };
+  onReplay = () => {
+          this.setState({ playerState: PLAYER_STATES.PLAYING });
+          this.videoPlayer.seek(0);
+        };
+  onProgress = data => {
+          const { isLoading, playerState } = this.state;
+          
+          if (!isLoading && playerState !== PLAYER_STATES.ENDED) {
+            this.setState({ currentTime: data.currentTime });
+          }
+        };
+  onLoad = data => this.setState({ duration: data.duration, isLoading: false });
+  onLoadStart = data => this.setState({ isLoading: true });
+  onEnd = () => this.setState({ playerState: PLAYER_STATES.ENDED });
+  onError = () => alert('Oh! ', error);
+  exitFullScreen = () => {
+          alert("Exit  screen");
+        };
+  enterFullScreen = () => {};
+  onFullScreen = () => {
+          if(this.state.screenType=='content')
+            this.setState({screenType:'cover'});
+         else
+            this.setState({screenType:'content'});
+        };
+  renderToolbar = () => (
+          <View >
+              <Text> toolbar </Text>
+          </View>
+        );
+  onSeeking = currentTime => this.setState({ currentTime });
+        
+   render() {
+     return (
       <View style={styles.container}>
-        <RNCamera
-          style={styles.inputcontainer}
-          ref={ref => {
-            this.camera = ref
-          }}
+        <Video
+          onEnd={this.onEnd}
+          onLoad={this.onLoad}
+          onLoadStart={this.onLoadStart}
+          onProgress={this.onProgress}
+          paused={this.state.paused}
+          ref={videoPlayer => (this.videoPlayer = videoPlayer)}
+          resizeMode={this.state.screenType}
+          onFullScreen={this.state.isFullScreen}
+          source={ {require('file:///C:/Users/Shyam%20Sundar/Downloads/tom_and_jerry_31.mp4')}} 
+          style={styles.mediaPlayer}
+          volume={10}
         />
-        <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-          <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.picture}>
-            <Text style={{ fontSize: 15, fontWeight:'bold' }}> Capture Picture  </Text>
-          </TouchableOpacity>
-        </View>
+        <MediaControls
+          duration={this.state.duration}
+          isLoading={this.state.isLoading}
+          mainColor="#333"
+          onFullScreen={this.onFullScreen}
+          onPaused={this.onPaused}
+          onReplay={this.onReplay}
+          onSeek={this.onSeek}
+          onSeeking={this.onSeeking}
+          playerState={this.state.playerState}
+          progress={this.state.currentTime}
+          toolbar={this.renderToolbar()}
+        />
       </View>
-    )
+    );
   }
-
-takePicture = async () => {
-  if (this.camera) {
-    const options = { quality: 0.5, base64: true };
-    const data = await this.camera.takePictureAsync(options).then(data => {
-      ToastAndroid.show(data.uri, ToastAndroid.SHORT);
-      CameraRoll.saveToCameraRoll(data.uri);
-      console.log(data);
-   
-  })
-}
-};
-saveImage = async filePath => {
-  try {
-    const ImageName = `${moment().format('DDMMYY_HHmmSSS')}.jpg`;
-    const newFilepath = `${dirPicutures}/${ImageName}`;
-    const imageMoved = await moveAttachment(filePath, newFilepath);
-    console.log('image moved', imageMoved);
-  } catch (error) {
-    console.log('Catch'+error);
-  }
-};
-
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'pink'
   },
-  inputcontainer: {
-    flex: 5,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  picture: {
-    flex: 0,
-    backgroundColor: '#fff',
+  toolbar: {
+    marginTop: 30,
+    backgroundColor: 'white',
+    padding: 10,
     borderRadius: 5,
-    padding: 15,
-    paddingHorizontal: 20,
-    alignSelf: 'center',
-    margin: 1,
   },
-})
-
-export default App
+  mediaPlayer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    backgroundColor: 'black',
+  },
+});
+export default App;

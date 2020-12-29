@@ -1815,6 +1815,11 @@
 "ee-first@1.1.1":
   "version" "1.1.1"
 
+"eme-encryption-scheme-polyfill@^2.0.1":
+  "integrity" "sha512-Wz+Ro1c0/2Wsx2RLFvTOO0m4LvYn+7cSnq3XOvRvLLBq8jbvUACH/zpU9s0/5+mQa5oaelkU69x+q0z/iWYrFA=="
+  "resolved" "https://registry.npmjs.org/eme-encryption-scheme-polyfill/-/eme-encryption-scheme-polyfill-2.0.1.tgz"
+  "version" "2.0.1"
+
 "emittery@^0.7.1":
   "version" "0.7.2"
 
@@ -3256,6 +3261,11 @@
     "array-includes" "^3.1.2"
     "object.assign" "^4.1.2"
 
+"keymirror@^0.1.1":
+  "integrity" "sha1-kYiJ6hP40KQufFVyUO7nE63JXDU="
+  "resolved" "https://registry.npmjs.org/keymirror/-/keymirror-0.1.1.tgz"
+  "version" "0.1.1"
+
 "kind-of@^1.1.0":
   "version" "1.1.0"
 
@@ -4267,7 +4277,21 @@
   dependencies:
     "prop-types" "^15.6.2"
 
-"react-native@>=0.62.0-rc.0 <0.64.0", "react-native@0.63.4":
+"react-native-media-controls@^2.2.0":
+  "integrity" "sha512-cXAOg7LElN+9RGpmoD7qGG/EDnVlhNh6vRoom5+dzk9YCapy4pxy0FTHaNOlHbXUYhFjm7sD55Ejye/GbptwUQ=="
+  "resolved" "https://registry.npmjs.org/react-native-media-controls/-/react-native-media-controls-2.2.0.tgz"
+  "version" "2.2.0"
+
+"react-native-video@^5.1.0-alpha8":
+  "integrity" "sha512-RRDSxqKe2F4OtiDWKCQlwVzvcsZ/TcWQdRxeAE3wsGBmFpAYFyhCz52QkFXgQQgYUuIK6Wd+j2lVxUoLp4+R2w=="
+  "resolved" "https://registry.npmjs.org/react-native-video/-/react-native-video-5.1.0-alpha8.tgz"
+  "version" "5.1.0-alpha8"
+  dependencies:
+    "keymirror" "^0.1.1"
+    "prop-types" "^15.7.2"
+    "shaka-player" "^2.5.9"
+
+"react-native@>=0.60", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@0.63.4":
   "version" "0.63.4"
   dependencies:
     "@babel/runtime" "^7.0.0"
@@ -4309,7 +4333,7 @@
     "react-is" "^16.8.6"
     "scheduler" "^0.19.1"
 
-"react@^16.13.1", "react@^16.8.0 || ^17.0.0", "react@16.13.1":
+"react@^16.13.1", "react@^16.8.0 || ^17.0.0", "react@>=16", "react@16.13.1":
   "version" "16.13.1"
   dependencies:
     "loose-envify" "^1.1.0"
@@ -4618,6 +4642,13 @@
 
 "setprototypeof@1.1.1":
   "version" "1.1.1"
+
+"shaka-player@^2.5.9":
+  "integrity" "sha512-kW6sNMl36E4ookOcAo7//D/+sNkKNw7kBCR58AAC0eYw+fpVXwUbFoN/aqsj5nhACZ00QGQQajTZXZyK1s8Dow=="
+  "resolved" "https://registry.npmjs.org/shaka-player/-/shaka-player-2.5.18.tgz"
+  "version" "2.5.18"
+  dependencies:
+    "eme-encryption-scheme-polyfill" "^2.0.1"
 
 "shebang-command@^1.2.0":
   "version" "1.2.0"
