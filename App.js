@@ -1,24 +1,30 @@
 import React, { Component } from 'react';
-import { Text, View,TouchableOpacity } from 'react-native';
-import VideoRecorder from 'react-native-beautiful-video-recorder';
+import {Text, View, StyleSheet, Animated } from 'react-native';
 
- class App extends Component {
-  start = () => {
-  // 30 seconds
-    this.videoRecorder.open({ maxLength: 30 },(data) => {
-      console.log('captured data', data);
-    });
-  }
-  
-  render() {
+export default function App() {
+      const position = new Animated.ValueXY({X:0,Y:0})
+     Animated.spring(position,{
+        toValue:{X:200,Y:500},
+        duration:2000
+     }).start()
+    
+
     return (
-      <View>
-        <TouchableOpacity onPress={this.start}>
-          <Text>Start</Text>
-        </TouchableOpacity>
-        <VideoRecorder ref={(ref) => { this.videoRecorder = ref; }} />
-      </View>
+        <View style={{flex:1}}>
+            <Animated.View style={{
+                height:50,
+                width:50,
+                alignItems:'center',
+                justifyContent:'center',
+                backgroundColor:'pink',
+                transform:[
+                    {translateX:position.x},
+                    {translateY:position.y}
+                ]
+            }}>
+                <Text>Hello</Text>
+            </Animated.View>
+        </View>
     );
-  }
 }
-export default App;
+    
