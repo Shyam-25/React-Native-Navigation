@@ -1,30 +1,33 @@
-import React, { Component } from 'react';
-import {Text, View, StyleSheet, Animated } from 'react-native';
+import React, { useState } from 'react';
+import {View, Text, Animated, TouchableOpacity} from 'react-native';
 
-export default function App() {
-      const position = new Animated.ValueXY({X:0,Y:0})
-     Animated.spring(position,{
-        toValue:{X:200,Y:500},
-        duration:2000
-     }).start()
-    
+const App = () => {
 
+    const value = useState(new Animated.ValueXY({ x:0, y:0})) [0]
+
+    function move() {
+        Animated.timing(value,{
+            toValue: { x:200, y:500},
+            duration:1000,
+            useNativeDriver: false
+        }).start()
+
+    }
     return (
-        <View style={{flex:1}}>
-            <Animated.View style={{
-                height:50,
-                width:50,
-                alignItems:'center',
-                justifyContent:'center',
-                backgroundColor:'pink',
-                transform:[
-                    {translateX:position.x},
-                    {translateY:position.y}
-                ]
-            }}>
-                <Text>Hello</Text>
+        <View>
+            <Animated.View style={value.getLayout()}>
+                <View
+                  style={{
+                      width:100,
+                      height:100,
+                      backgroundColor:'pink'
+                  }} />
             </Animated.View>
+            <TouchableOpacity onPress={move}>
+                <Text>HELLO</Text>
+            </TouchableOpacity>
         </View>
-    );
+    )
 }
-    
+
+export default App;
