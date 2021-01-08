@@ -1,124 +1,76 @@
 import React, { Component } from 'react';
-import { StyleSheet,Text, View, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {  View, Text, StyleSheet, Picker } from 'react-native';
+import {Calendar } from 'react-native-calendars';
 
-export default class App extends Component{
-  constructor(props){
-    super(props);
+export default class App extends Component
+{
+  constructor(){
+    super();
     this.state={
-      expanded:false,
-      ismorning:false,
-      isafternoon:false
-      
+      sickleave:12,
+      causvalleave:10,
+      leaveType:'Select Leave type'
+
     }
   }
- 
   render(){
     return(
+      <View style={styles.container }>
       
-      <View style ={styles.container}>
-      <TouchableOpacity
-
-      onPress={()=>this.setState({expanded:!this.state.expanded})} style={styles.row}>
-   
-       
-        <Text style={styles.text}>Half Day</Text>
-        <Icon name={this.state.expanded? 'keyboard-arrow-up' : 'keyboard-arrow-down'} style={styles.iconmain}  />
-        {/* <Icon name={  'keyboard-arrow-down'} size={30} color='grey' /> */}
-     
-      </TouchableOpacity>
-      {
-        this.state.expanded &&
-
- 
-         <View style={styles.child}>
-
-         <TouchableOpacity>
-
-         
-            <Text style={styles.textstyle}>Morning</Text>
-            <Icon name={this.state.ismorning? 'check-circle' :  'circle'} style={styles.iconstyle} />   
-         </TouchableOpacity>
-
-       <TouchableOpacity>
-            <Text style={styles.textstyle}>Afternoon</Text>
-            <Icon name={this.state.isafternoon? 'check-circle' :  'circle'} style={styles.aicon} />
-
-        </TouchableOpacity>
-       
- 
-          </View>
-
- 
-}
-     
+      <View style={styles.inputcontainer}>
+        <Text style={styles.textview}>Sickleave:{this.state.sickleave}</Text>
+        <Text style={styles.textview}>  Causalleave:{this.state.causvalleave}</Text>
       </View>
-
-    )
+       
+       <View style={styles.pickerstyle}>
+         <Text style={styles.textpicker}>Leave Type</Text>
+         <Picker style={styles.pickergg}
+           selectedValue={this.state.leaveType}
+           onValueChange={(itemValue,itemIndex) => {this.setState({itemValue}); console.log(this.state.leaveType)}}>
+             <Picker.Item label='Select leave type' value='leave' />
+             <Picker.Item label='Sick Leave' value='sick' />
+             <Picker.Item label='casuval leave' value='casuval' />
+           </Picker>
+       </View>
+      </View>
+    );
   }
 }
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
   container:{
-    // flex:1,
+    flex:1,
     backgroundColor:'pink',
-    flex:1
-    
-  },
-  text:{
-    fontSize:20,
-    fontWeight:'bold',
-    marginTop:150,
     justifyContent:'center',
     alignItems:'center',
-    marginLeft:20,
-    shadowColor: '#fff',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 100,
-    shadowRadius: 2,
-    elevation: 3,
-    
+    alignContent:'center'
   },
- 
-  child:{
-    
-    marginLeft:20,
-    marginTop:30,
+  inputcontainer:{
+    padding:10,
+    elevation:4,
     flexDirection:'row',
-    justifyContent:'space-between',
-    // backgroundColor:'#fff'
-    
+    justifyContent:'center',
   },
-  textstyle:{
+  textview:{
     fontSize:20,
-    marginTop:1,
     fontWeight:'bold',
-    marginLeft:50
-  },
-  iconstyle:{
-    marginLeft:30,
-    paddingLeft:130,
-    marginBottom:40,
-    fontSize:20,
-    marginTop:10
-    // paddingTop:20
-  },
-  row:{
     flexDirection:'row',
-    marginLeft:40,
-    marginBottom:20,
-    justifyContent:'space-between',
-    marginBottom:50
+    
   },
-  aicon:{
-    paddingLeft:130,
+  pickerstyle:{
+    flexDirection:'row',
+    elevation:4,
+  },
+  textpicker:{
     fontSize:20,
-    marginLeft:30
+    marginRight:20
   },
-  iconmain:{
-    marginLeft:30,
-    paddingLeft:120,
+  pickergg:{
+    fontSize:20,
+    height: 50, 
+    width: 200,
+    borderWidth:1,
     marginBottom:50
+  
   }
 })
-
