@@ -1,39 +1,29 @@
 import React, { Component } from 'react';
-import { StyleSheet,Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons';
+import { StyleSheet,Text, View, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class App extends Component{
   constructor(props){
     super(props);
     this.state={
-      expanded:false
+      expanded:false,
+      ismorning:false,
+      isafternoon:false
       
     }
   }
-  isEnabled=()=>{
-    <View style={styles.textview}>
-    <Text style={styles.textday}>Morning</Text>
-    <Text style={styles.textday}>Afternoon</Text>
-  </View>
-
-  }
+ 
   render(){
     return(
       
       <View style ={styles.container}>
       <TouchableOpacity
 
-      onPress={()=>this.setState({expanded:true})} style={styles.row}>
-        
-        {/* <Button
-        title='half day'
-        backgroundColor='#fff'
-        onPress={()=> alert('leave')}>
-        hald
-
-        </Button> */}
+      onPress={()=>this.setState({expanded:!this.state.expanded})} style={styles.row}>
+   
+       
         <Text style={styles.text}>Half Day</Text>
-        {/* <Icon name={this.isEnable? 'keyboard-arrow-up' : 'keyboard-arrow-down'} size={30} color='grey' /> */}
+        <Icon name={this.state.expanded? 'keyboard-arrow-up' : 'keyboard-arrow-down'} style={styles.iconmain}  />
         {/* <Icon name={  'keyboard-arrow-down'} size={30} color='grey' /> */}
      
       </TouchableOpacity>
@@ -43,9 +33,19 @@ export default class App extends Component{
  
          <View style={styles.child}>
 
- 
-            <Text>Hi</Text>
+         <TouchableOpacity>
 
+         
+            <Text style={styles.textstyle}>Morning</Text>
+            <Icon name={this.state.ismorning? 'check-circle' :  'circle'} style={styles.iconstyle} />   
+         </TouchableOpacity>
+
+       <TouchableOpacity>
+            <Text style={styles.textstyle}>Afternoon</Text>
+            <Icon name={this.state.isafternoon? 'check-circle' :  'circle'} style={styles.aicon} />
+
+        </TouchableOpacity>
+       
  
           </View>
 
@@ -60,8 +60,9 @@ export default class App extends Component{
 
 const styles= StyleSheet.create({
   container:{
-    flex:1,
+    // flex:1,
     backgroundColor:'pink',
+    flex:1
     
   },
   text:{
@@ -70,7 +71,7 @@ const styles= StyleSheet.create({
     marginTop:150,
     justifyContent:'center',
     alignItems:'center',
-    marginLeft:60,
+    marginLeft:20,
     shadowColor: '#fff',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 100,
@@ -78,18 +79,46 @@ const styles= StyleSheet.create({
     elevation: 3,
     
   },
-  textview:{
+ 
+  child:{
     
-    // alignItems:'center',
-    // justifyContent:'center'
-    marginTop:50,
+    marginLeft:20,
+    marginTop:30,
+    flexDirection:'row',
+    justifyContent:'space-between',
+    // backgroundColor:'#fff'
     
-
   },
-  textday:{
+  textstyle:{
     fontSize:20,
-    marginLeft:80,
+    marginTop:1,
+    fontWeight:'bold',
+    marginLeft:50
+  },
+  iconstyle:{
+    marginLeft:30,
+    paddingLeft:130,
+    marginBottom:40,
+    fontSize:20,
     marginTop:10
+    // paddingTop:20
+  },
+  row:{
+    flexDirection:'row',
+    marginLeft:40,
+    marginBottom:20,
+    justifyContent:'space-between',
+    marginBottom:50
+  },
+  aicon:{
+    paddingLeft:130,
+    fontSize:20,
+    marginLeft:30
+  },
+  iconmain:{
+    marginLeft:30,
+    paddingLeft:120,
+    marginBottom:50
   }
 })
 
