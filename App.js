@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     // padding: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'grey'
+    backgroundColor:'#9AC4F8'
   },
   title: {
     // textAlign: 'center',
@@ -185,8 +185,9 @@ tetime:{
 },
 submit:{
   fontSize:20,
-  backgroundColor:'#9AC4F8',
+  backgroundColor:'#fff',
   fontWeight:'bold',
-  marginRight:5
+  marginRight:220,
+  // marginLeft:20
 }
 });
