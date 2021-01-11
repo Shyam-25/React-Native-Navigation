@@ -1,76 +1,70 @@
-import React, { Component } from 'react';
-import {  View, Text, StyleSheet, Picker } from 'react-native';
-import {Calendar } from 'react-native-calendars';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
 
-export default class App extends Component
-{
-  constructor(){
-    super();
-    this.state={
-      sickleave:12,
-      causvalleave:10,
-      leaveType:'Select Leave type'
+import DatePicker from 'react-native-datepicker';
 
-    }
-  }
-  render(){
-    return(
-      <View style={styles.container }>
-      
-      <View style={styles.inputcontainer}>
-        <Text style={styles.textview}>Sickleave:{this.state.sickleave}</Text>
-        <Text style={styles.textview}>  Causalleave:{this.state.causvalleave}</Text>
+const App = () => {
+  const [date, setDate] = useState('20-11-2020');
+
+  return (
+    // <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <Text style={styles.title}>
+          Calender Picker
+        </Text>
+        <DatePicker
+          style={styles.datePickerStyle}
+          date={date} 
+          mode="date" 
+          placeholder="select date"
+          format="DD-MM-YYYY"
+          minDate="01-01-2016"
+          maxDate="01-01-2049"
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
+            dateIcon: {
+              //display: 'none',
+              position: 'absolute',
+              left: 0,
+              top: 4,
+              marginLeft: 0,
+            },
+            dateInput: {
+              marginLeft: 36,
+            },
+          }}
+          onDateChange={(date) => {
+            setDate(date);
+          }}
+        />
       </View>
-       
-       <View style={styles.pickerstyle}>
-         <Text style={styles.textpicker}>Leave Type</Text>
-         <Picker style={styles.pickergg}
-           selectedValue={this.state.leaveType}
-           onValueChange={(itemValue,itemIndex) => {this.setState({itemValue}); console.log(this.state.leaveType)}}>
-             <Picker.Item label='Select leave type' value='leave' />
-             <Picker.Item label='Sick Leave' value='sick' />
-             <Picker.Item label='casuval leave' value='casuval' />
-           </Picker>
-       </View>
-      </View>
-    );
-  }
-}
+    // </SafeAreaView>
+  );
+};
+
+export default App;
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    backgroundColor:'pink',
-    justifyContent:'center',
-    alignItems:'center',
-    alignContent:'center'
+  container: {
+    flex: 1,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:'pink'
   },
-  inputcontainer:{
-    padding:10,
-    elevation:4,
-    flexDirection:'row',
-    justifyContent:'center',
+  title: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    padding: 20,
   },
-  textview:{
-    fontSize:20,
-    fontWeight:'bold',
-    flexDirection:'row',
-    
-  },
-  pickerstyle:{
-    flexDirection:'row',
-    elevation:4,
-  },
-  textpicker:{
-    fontSize:20,
-    marginRight:20
-  },
-  pickergg:{
-    fontSize:20,
-    height: 50, 
+  datePickerStyle: {
     width: 200,
-    borderWidth:1,
-    marginBottom:50
-  
-  }
-})
+    marginTop: 20,
+  },
+});
