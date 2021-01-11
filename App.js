@@ -3,7 +3,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput
+  TextInput,
+  TouchableOpacity
 } from 'react-native';
 
 import DatePicker from 'react-native-datepicker';
@@ -25,6 +26,7 @@ const App = () => {
           format="DD-MM-YYYY"
           minDate="01-01-2016"
           maxDate="01-01-2049"
+          backgroundColor='black'
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"
           customStyles={{
@@ -43,14 +45,47 @@ const App = () => {
             setDate(date);
           }}
         />
-         <View style={styles.inputcontainer}>
-         <Text style={styles.tete}>HI</Text>
-         <TextInput style={styles.inputs}
-              placeholder="Email"
-              keyboardType="default" >
-                hi
+       
+
+      <View style={styles.time}>
+        <Text style={styles.tetime}>Time From</Text>
+        <TextInput style={styles.inputs}
+              placeholder="Time "
+              keyboardType="default"
+              borderBottomColor='red'
+              borderColor='red' >
+               
               </TextInput>
       </View>
+      <View style={styles.timeit}>
+        <Text style={styles.teto}>TotalHours</Text>
+        <TextInput style={styles.inputs}
+              placeholder="Total Hours"
+              keyboardType="default"
+              borderBottomColor='red'
+              borderColor='red' >
+               
+              </TextInput>
+      </View>
+
+      <View style={styles.inputcontainer}>
+         <Text style={styles.tete}>DESCRIPTION</Text>
+         <TextInput style={styles.inputs}
+              placeholder="description"
+              keyboardType="default"
+              borderBottomColor='red'
+              borderColor='red' >
+               
+              </TextInput>
+      </View>
+       
+
+       <TouchableOpacity >
+         <Text style={styles.submit}>
+           Submit
+         </Text>
+       </TouchableOpacity>
+
       </View>
 
      
@@ -66,7 +101,7 @@ const styles = StyleSheet.create({
     // padding: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'pink'
+    backgroundColor:'grey'
   },
   title: {
     // textAlign: 'center',
@@ -75,40 +110,83 @@ const styles = StyleSheet.create({
     padding: 10,
     marginRight:250,
     paddingTop:50,
-    paddingBottom:10
+    paddingBottom:10,
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 2
+    },
   },
   datePickerStyle: {
-    width: 200,
-    marginRight:150,
-    paddingBottom:10
+    width: 290,
+    marginRight:10,
+    paddingBottom:10,
+    marginRight:80,
+    borderBottomColor:'grey'
+    // height:30
     // paddingTop:10
     // marginTop: 20,
   },
   inputcontainer:{
-    flex:1,
+    // flex:.1,
     paddingBottom:20,
     marginBottom:20,
-    width:250,
-    height:55,
+    marginLeft:40,
+    marginRight:5,
+    paddingBottom:30,
   },
   textdes:{
     fontSize:20,
     marginBottom:20,
     marginRight:200,
-    paddingBottom:30,
-    fontWeight:'bold'
+    paddingBottom:10,
+    fontWeight:'bold',
+    // paddingTop:10
+   
   },
   inputs:{
-    height:45,
-    marginLeft:46,
-    borderBottomColor: '#FFFFFF',
+    height:40,
+    width:290,
+    marginLeft:5,
+    borderBottomColor: '#ff0000',
     fontSize:20,
-    marginRight:150
+    marginRight:50,
+    backgroundColor:'white'
 },
 tete:{
   fontSize:20,
-  marginRight:150,
+  // marginRight:100,
+  fontWeight:'bold',
+  width:200,
+  height:55,
+  // paddingRight:50
+},
+time:{
+  marginRight:.5,
+  paddingBottom:30,
+  paddingBottom:20,
+  marginBottom:20,
+  marginLeft:40
+},
+timeit:{
+  marginRight:5,
+  paddingBottom:30,
+  paddingBottom:20,
+  marginBottom:20,
+  marginLeft:40
+},
+teto:{
+  fontSize:20,
   fontWeight:'bold'
-  
+},
+tetime:{
+  fontSize:20,
+  fontWeight:'bold'
+},
+submit:{
+  fontSize:20,
+  backgroundColor:'#9AC4F8',
+  fontWeight:'bold',
+  marginRight:5
 }
 });
