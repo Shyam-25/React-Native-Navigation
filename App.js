@@ -1,75 +1,58 @@
-import {View, Text,TouchableOpacity, StyleSheet,Picker, TextInput, Modal} from 'react-native';
-import React, { Component } from "react";
-import Icon  from 'react-native-vector-icons/Feather';
-import {Calendar} from 'react-native-calendars';
-class PermissionApply extends Component {
-    constructor(props){
-      super(props);
-      const current_date=new Date();
-      const current_day= new Date().getDate();
-      const current_month= new Date().getMonth();
-      const current_year = new Date().getFullYear();
-      this.state={
-        isDateEnabled:false,
-        dateApplied:[{dateString: current_date, day: current_day, month:current_month+1, timestamp: 1331683200000, year: current_year}],
-        timeValue:'',
-        totalHours:'',
-        descriptionValue:'',
-    };
-    }
-    render(){
-        return(
-            <View style={styles.container}>
-                <View style={styles.insideContainer}>
-                    <Text style={styles.dateText}> Date </Text>
-                    <View style={styles.dateView}> 
-                        <TextInput style={styles.dateInput} placeholder='20/12/2020' value={this.state.dateApplied.dateString}/>
-                        <Icon name='calendar' style={styles.CalendarIcon}
-                        size={30} color='blue' 
-                        onPress={()=>this.setState({isDateEnabled:true})}/>
-                    
-                        <Modal style={styles.modalDate}
-                        visible={this.state.isDateEnabled}
-                        transparent={true}   >            
-                        <View style={styles.modalDate}>
-                            <Calendar
-                            style={styles.calendarDetails}
-                            current={new Date().getDate}
-                            hideExtraDays={true}
-                            onDayPress={(day) => {console.log('selected day', day);this.setState({isDateEnabled:false,dateApplied:day});}}
-                            maxDate={'2025-05-30'}
-                            minDate={new Date().getDate}
-                            showWeekNumbers={true}
-                            theme={{
-                                backgroundColor: '#ffffff',
-                                calendarBackground: '#ffffff',
-                                textSectionTitleColor: '#b6c1cd',
-                                textSectionTitleDisabledColor: '#d9e1e8',
-                                selectedDayBackgroundColor: '#00adf5',
-                                selectedDayTextColor: '#ffffff',
-                                todayTextColor: '#00adf5',
-                                dayTextColor: '#2d4150',
-                                textDisabledColor: '#d9e1e8',
-                                dotColor: '#00adf5',
-                                selectedDotColor: '#ffffff',
-                                textDayFontWeight: '300',
-                                textMonthFontWeight: 'bold',
-                                textDayHeaderFontWeight: '300',
-                                textDayFontSize: 14,
-                                textMonthFontSize: 14,
-                                textDayHeaderFontSize: 14,
-                            }}
-                            enableSwipeMonths={true}/>
-                        </View>
-                        </Modal>
-                    </View>
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Picker
+} from 'react-native';
 
-                    <View style={styles.timeView}>
-                        <Text style={styles.timeText}>Time</Text>
-                        <Picker style={styles.pickers}
-                        selectedValue={this.state.timeValue}
-                        onValueChange={(itemValue, itemIndex) => {this.setState({timeValue:itemValue,totalHours:'01:00:00'})}}>
-                        <Picker.Item label='Select Time' value='default'/>
+import DatePicker from 'react-native-datepicker';
+
+const App = () => {
+  const [date, setDate] = useState('');
+
+  return (
+    // <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+      <View style={styles.textcontainer}>
+        <Text style={styles.title}>
+          Date
+        </Text>
+        <DatePicker
+          style={styles.datePickerStyle}
+          date={date} 
+          mode="date" 
+          placeholder="select date"
+          format="DD-MM-YYYY"
+          minDate="01-01-2016"
+          maxDate="01-01-2049"
+          backgroundColor='black'
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
+            // dateIcon: {
+            //   //display: 'none',
+            //   position: 'absolute',
+            //   left: 0,
+            //   top: 4,
+            //   marginLeft: 0,
+            // },
+            dateInput: {
+              marginLeft: 36,
+            },
+          }}
+          onDateChange={(date) => {
+            setDate(date);
+          }}
+        />
+       
+
+      <View style={styles.time}>
+        <Text style={styles.tetime}>Time From</Text>
+        <Picker style={styles.inputs}>
+        <Picker.Item label='Select Time' value='default'/>
                         <Picker.Item label="00.00" value="00.00" />
                         <Picker.Item label="00.30" value="00.30"/>
                         <Picker.Item label="01.00" value="01.00" />
@@ -118,138 +101,158 @@ class PermissionApply extends Component {
                         <Picker.Item label="22.30" value="22.30"/>
                         <Picker.Item label="23.00" value="23.00" />
                         <Picker.Item label="23.30" value="23.30"/>
-                        </Picker>
-                    </View>       
-                    
-                    <View style={styles.hoursView}>
-                        <Text style={styles.hoursText}>Total Hours</Text>
-                        <TextInput style={styles.hoursInput} value={this.state.totalHours} />
-                    </View>
-                        
-                    <View style={styles.descriptionView}>
-                        <Text style={styles.descriptionText}>Description</Text>
-                        <TextInput style={styles.descriptionInput} value={this.state.descriptionValue} multiline={true} />
-                    </View>
+        </Picker>
+         
+        {/* <TextInput style={styles.inputs}
+              placeholder="Time "
+              keyboardType="number-pad"
+              borderBottomColor='red'
+              borderColor='red' >
+               
+              </TextInput> */}
+      </View>
+      <View style={styles.timeit}>
+        <Text style={styles.teto}>TotalHours</Text>
+        <TextInput style={styles.inputs}
+              placeholder="01:00:00"
+              keyboardType="number-pad"
+              borderBottomColor='red'
+              borderColor='red' >
+               
+              </TextInput>
+      </View>
 
-                    <TouchableOpacity style={styles.submitContainer} onPress={this.validate}>
-                    <Text style={styles.submitText}>Submit</Text>
-                    </TouchableOpacity>
+      <View style={styles.inputcontainer}>
+         <Text style={styles.tete}>DESCRIPTION</Text>
+         <TextInput style={styles.inputs}
+              placeholder="description"
+              keyboardType="default"
+              borderBottomColor='red'
+              borderColor='red' >
+               
+              </TextInput>
+      </View>
+       
 
-                </View>
-            </View>
+       <TouchableOpacity >
+         <Text style={styles.submit}>
+           Submit
+         </Text>
+       </TouchableOpacity>
+       </View>
+      </View>
 
-        )
-    }
-}
+     
+    // </SafeAreaView>
+  );
+};
+
+export default App;
 
 const styles = StyleSheet.create({
-    container:{
-        padding:20,
-        justifyContent:'center',
-        alignItems:'center',
-        alignContent:'center',
-        flex:1,
-        backgroundColor:"pink"
+  container: {
+    flex: 1,
+    // padding: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:'#42A5F5'
+  },
+  title: {
+    // textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    padding: 10,
+    marginRight:150,
+    paddingLeft:42,
+    paddingTop:50,
+    paddingBottom:10,
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 2
     },
-    insideContainer:{
-        // elevation:45,
-        borderRadius:10,
-        backgroundColor:'white',
-        width:350,
-        padding:20,
-        backgroundColor:"grey"
-    },
-    dateText:{
-        fontSize:18,
-        marginBottom:10,
-    },
-    dateView:{
-        flexDirection:'row',
-        marginBottom:10,
-    },
-    dateInput:{
-        borderEndWidth:2,
-        borderColor:'blue',
-        height:40,
-        width:250,
-        borderRadius:10,
-        borderWidth:2,
-    },
-    CalendarIcon:{
-        marginLeft:10,
-        //marginTop:10,
-    },
-    modalDate:{
-        justifyContent:'center',
-        alignItems:'center',
-        elevation:4,
-        height:150,
-        marginTop:250,
-        marginLeft:20,
-        marginRight:20,
-        backgroundColor:'white',
-        flex: .8,
-        borderRadius:10,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        padding:10,
-    },
-    calendarDetails:{
-        borderWidth: 1,
-        borderColor: 'blue',
-        //height: 200,
-    },
-    timeText:{
-        fontSize:18,
-        marginBottom:10,
-    },
-    hoursView:{
-        marginBottom:10,
-    },
-    hoursText:{
-        fontSize:18,
-        marginBottom:10,
-    },
-    hoursInput:{
-        borderEndWidth:2,
-        borderColor:'blue',
-        height:40,
-        width:250,
-        borderRadius:10,
-        borderWidth:2,
-    },
-    descriptionView:{
-        marginBottom:10,
-    },
-    descriptionText:{
-        fontSize:18,
-        marginBottom:10,
-    },
-    descriptionInput:{
-        borderEndWidth:2,
-        borderColor:'blue',
-        height:40,
-        width:250,
-        borderRadius:10,
-        borderWidth:2,
-    },
-    submitContainer:{
-        justifyContent:'center',
-        elevation:5,
-        backgroundColor:'pink',
-        height:30,
-        alignItems:'center',
-        width:100,
-        marginLeft:100,
-        borderRadius:10,
-      },
-    submitText:{
-        fontSize:18,
-    },
+  },
+  textcontainer:{
+    backgroundColor:'pink',
+    width:350,
+    // height:4
+    // flexDirection:'row'
+  },
+  datePickerStyle: {
+    width: 290,
+    marginRight:1,
+    paddingBottom:10,
+    marginRight:15,
+    paddingRight:15,
+    paddingLeft:10,
+    borderBottomColor:'grey'
+    // height:30
+    // paddingTop:10
+    // marginTop: 20,
+  },
+  inputcontainer:{
+    // flex:.1,
+    paddingBottom:20,
+    marginBottom:20,
+    marginLeft:40,
+    marginRight:5,
+    paddingBottom:30,
+  },
+  textdes:{
+    fontSize:20,
+    marginBottom:20,
+    marginRight:200,
+    paddingBottom:10,
+    fontWeight:'bold',
+    // paddingTop:10
+   
+  },
+  inputs:{
+    height:40,
+    width:290,
+    marginLeft:5,
+    borderBottomColor: '#ff0000',
+    fontSize:20,
+    marginRight:50,
+    backgroundColor:'white'
+},
+tete:{
+  fontSize:20,
+  // marginRight:100,
+  fontWeight:'bold',
+  width:200,
+  height:55,
+  // paddingRight:50
+},
+time:{
+  marginRight:.5,
+  paddingBottom:30,
+  paddingBottom:20,
+  marginBottom:20,
+  marginLeft:40
+},
+timeit:{
+  marginRight:5,
+  paddingBottom:30,
+  paddingBottom:20,
+  marginBottom:20,
+  marginLeft:40
+},
+teto:{
+  fontSize:20,
+  fontWeight:'bold'
+},
+tetime:{
+  fontSize:20,
+  fontWeight:'bold'
+},
+submit:{
+  fontSize:20,
+  backgroundColor:'#fff',
+  fontWeight:'bold',
+  marginRight:320,
+  marginLeft:20,
+  paddingBottom:10,
+  flexDirection:'row'
+}
 });
-export default PermissionApply;
